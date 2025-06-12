@@ -1,7 +1,7 @@
 import GoogleProvider from "next-auth/providers/google";
-import { nanoid } from "nanoid";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
+import { nanoid } from "nanoid";
 
 export const authOptions = {
     adapter: PrismaAdapter(prisma),
@@ -16,14 +16,80 @@ export const authOptions = {
         }),
     ],
     callbacks: {
+        async signIn({ user, account }) {
+            if (account.provider === "google") {
+                let dbUser = await prisma.user.findUnique({
+                    where: { email: user.email },
+                });
+
+                if (!dbUser) {
+                    // Generate unique username
+                    let username;
+                    let usernameExists = true;
+                    while (usernameExists) {
+                        username = nanoid(10);
+                        usernameExists = await prisma.user.findUnique({
+                            where: { username },
+                        });
+                    }
+
+                    // Create new user
+                    dbUser = await prisma.user.create({
+                        data: {
+                            email: user.email,
+                            name: user.name,
+                            image: user.image,
+                            role: "user",
+                            username,
+                        },
+                    });
+                }
+
+                // Update account with correct userId
+                if (account) {
+                    await prisma.account.upsert({
+                        where: {
+                            provider_providerAccountId: {
+                                provider: account.provider,
+                                providerAccountId: account.providerAccountId,
+                            },
+                        },
+                        update: {
+                            userId: dbUser.id,
+                        },
+                        create: {
+                            userId: dbUser.id,
+                            type: account.type,
+                            provider: account.provider,
+                            providerAccountId: account.providerAccountId,
+                            access_token: account.access_token,
+                            expires_at: account.expires_at,
+                            token_type: account.token_type,
+                            scope: account.scope,
+                            id_token: account.id_token,
+                            session_state: account.session_state,
+                        },
+                    });
+                }
+
+                return true;
+            }
+            return true;
+        },
         async jwt({ token, user }) {
             if (user) {
-                token.id = user.id || nanoid();
-                token.name = user.name;
-                token.email = user.email;
-                token.image = user.image;
-                token.username = nanoid(10);
-                token.role = "user";
+                const dbUser = await prisma.user.findUnique({
+                    where: { email: user.email },
+                    select: { id: true, name: true, email: true, username: true, image: true, role: true },
+                });
+                if (dbUser) {
+                    token.id = dbUser.id;
+                    token.name = dbUser.name;
+                    token.email = dbUser.email;
+                    token.username = dbUser.username;
+                    token.image = dbUser.image;
+                    token.role = dbUser.role || "user";
+                }
             }
             return token;
         },
@@ -38,7 +104,7 @@ export const authOptions = {
             }
             return session;
         },
-        async redirect() {
+        async redirect( ) {
             return "/dashboard";
         },
     },

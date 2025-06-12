@@ -19,7 +19,7 @@ export default function Home() {
             </p>
           </div>
           <div className="flex gap-3">
-            <Link href="/blogs" className="bg-gray-200 hover:bg-gray-300 transition-all duration-200 delay-100 text-black px-4 py-1 rounded" >
+            <Link href="/sign-in" className="bg-gray-200 hover:bg-gray-300 transition-all duration-200 delay-100 text-black px-4 py-1 rounded" >
               Try it out!
             </Link>
             <Button variant="outline">Try it out!</Button>

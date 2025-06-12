@@ -3,13 +3,15 @@ import "./globals.css";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sideba";
 
- import {Poppins} from 'next/font/google'
+import { Poppins } from 'next/font/google'
 import Navbar from "@/components/navbar";
+import AuthProvider from "@/components/providers/AuthProvider";
+import { Toaster } from "@/components/ui/toaster";
 
 const poppins = Poppins({
   subsets: ["latin"],
-  
-  weight: [ "400","500","600"],
+
+  weight: ["400", "500", "600"],
 })
 
 
@@ -24,15 +26,18 @@ export default function RootLayout({ children }) {
       <body
         className={`${poppins.className} antialiased`}
       >
-        <SidebarProvider>
-          <AppSidebar />
-          <main className="w-full">
-            <SidebarTrigger />
-            <Navbar />
-                {children}
-          </main>
-        </SidebarProvider>
-        
+        <AuthProvider>
+          <SidebarProvider>
+            <AppSidebar />
+            <main className="w-full">
+              <SidebarTrigger />
+              <Navbar />
+              {children}
+              <Toaster />
+            </main>
+          </SidebarProvider>
+        </AuthProvider>
+
       </body>
     </html>
   );

@@ -1,16 +1,12 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider     = "mongodb"
-  url          = env("DATABASE_URL")
+  url          = "mongodb+srv://doctorappointment:doctorappointment2025@cluster0.kyauq.mongodb.net/writely?retryWrites=true&w=majority&appName=Cluster0"
   relationMode = "prisma"
 }
-
-
- 
 
 model Account {
   id                String  @id @default(auto()) @map("_id") @db.ObjectId
@@ -44,7 +40,7 @@ model User {
   name          String?
   email         String?   @unique
   emailVerified DateTime?
-  username      String    @unique @default(nanoid())
+  username      String    @unique  
   image         String?
   role          String?
   accounts      Account[]

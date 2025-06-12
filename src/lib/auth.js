@@ -1,6 +1,7 @@
-import GoogleProvider from 'next-auth/providers/google';
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import prisma from '@/lib/prisma';
+import GoogleProvider from "next-auth/providers/google";
+import { nanoid } from "nanoid";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import { prisma } from "@/lib/prisma";
 
 export const authOptions = {
     adapter: PrismaAdapter(prisma),
@@ -12,33 +13,17 @@ export const authOptions = {
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        })
+        }),
     ],
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
-                const dbUser = prisma.user.findUnique({
-                    where: { email: user.email },
-                    select: { id: true, name: true, email: true, username: true, image: true, role: true }
-                })
-                if (dbUser) {
-                    token.id = dbUser.id;
-                    token.name = dbUser.name;
-                    token.email = dbUser.email;
-                    token.username = dbUser.username;
-                    token.image = dbUser.image;
-                    token.role = dbUser.role;
-                } else {
-                    const newuser = await prisma.user.create({
-                        data: {
-                            email: user.email,
-                            name: user.name,
-                            role: "user",
-                            image: user.image,
-                        }
-                    });
-                    token.id = newuser.id;
-                }
+                token.id = user.id || nanoid();
+                token.name = user.name;
+                token.email = user.email;
+                token.image = user.image;
+                token.username = nanoid(10);
+                token.role = "user";
             }
             return token;
         },
@@ -53,9 +38,8 @@ export const authOptions = {
             }
             return session;
         },
-        redirect() {
-            return "/dashboard"
-        } 
+        async redirect() {
+            return "/dashboard";
+        },
     },
-
 };

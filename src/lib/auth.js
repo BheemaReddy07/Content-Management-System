@@ -1,7 +1,6 @@
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
-import { nanoid } from "nanoid";
 
 export const authOptions = {
     adapter: PrismaAdapter(prisma),
@@ -23,14 +22,15 @@ export const authOptions = {
                 });
 
                 if (!dbUser) {
-                    // Generate unique username
-                    let username;
-                    let usernameExists = true;
-                    while (usernameExists) {
-                        username = nanoid(10);
-                        usernameExists = await prisma.user.findUnique({
-                            where: { username },
-                        });
+                    // Extract username from email (before @)
+                    let baseUsername = user.email.split("@")[0];
+                    let username = baseUsername;
+                    let counter = 1;
+
+                    // Ensure username is unique
+                    while (await prisma.user.findUnique({ where: { username } })) {
+                        username = `${baseUsername}_${counter}`;
+                        counter++;
                     }
 
                     // Create new user

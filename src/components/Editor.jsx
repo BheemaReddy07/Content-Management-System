@@ -11,8 +11,10 @@ export default function Editor({ onSave }) {
     const { register, handleSubmit } = useForm();
     const [content, setContent] = useState("");
     const [ogImage,setOgImage] = useState("");
+
+
     const handleForm = (data) => {
-        console.log("Form submitted", data);
+         
         const generatedSlug = slugify(data.title);
         onSave({ ...data, slug: generatedSlug, ogImage, content });
     };

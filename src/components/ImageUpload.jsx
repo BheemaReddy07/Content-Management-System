@@ -1,20 +1,18 @@
 
-// import { storage } from "@/static/firebaseConfig"
-// import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useState } from "react";
 import axios from "axios";
-import { set } from "react-hook-form";
+
 
 
 export default function ImageUpload({ returnImage }) {
-    // const [imageAsFile, setImageAsFile] = useState("");
+
     const [loading, setLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState(null);
 
 
     const handleImageUpload = async (e) => {
         const file = e.target.files[0];
-        // setImageAsFile(image);
+
         if (!file) return;
 
         const formData = new FormData()
@@ -24,7 +22,7 @@ export default function ImageUpload({ returnImage }) {
         try {
             const { data } = await axios.post(`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`, formData);
             setImageUrl(data.secure_url);
-            returnImage(data.secure_url); // Pass the URL back to the parent component
+            returnImage(data.secure_url);
         } catch (error) {
             console.error("Cloudinary upload error:", error.message);
         }
@@ -33,24 +31,7 @@ export default function ImageUpload({ returnImage }) {
         }
     }
 
-    // const uploadToFireBase = async (image) => {
-    //     setLoading(true);
-    //     const storageRef = ref(storage, `images/${image.name}`);
-    //     try {
-    //         await uploadBytes(storageRef, image);
-    //         const url = await getDownloadURL(storageRef);
-    //         setImageUrl(url);
-    //         returnImage(url); // Pass the URL back to the parent component
-    //         console.log("Image uploaded to firebase successfully:", url);
 
-    //     } catch (error) {
-    //         console.error("Error uploading image:", error.message);
-
-    //     }
-    //     finally {
-    //         setLoading(false);
-    //     }
-    // }
 
     return (
         <div className="py-2 flex flex-col gap-5 w-full">

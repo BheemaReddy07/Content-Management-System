@@ -1,4 +1,4 @@
-import { Anvil } from "lucide-react";
+import { Anvil, User } from "lucide-react";
 import Link from "next/link";
 
 import {
@@ -10,23 +10,23 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
+import { getAuthSession } from "@/lib/auth";
+import Image from "next/image";
+import SignOut from "./signOut";
+export default async function Navbar() {
+    const session = await getAuthSession();
 
-export default function Navbar() {
-    const auth = true;
-const tempUser ={
-    name:"Jaddu",
-    username:"Jaddu__123"
-}
+
 
     return (
         <nav className="w-full px-8 h-12 flex  justify-between items-center">
             <Link href="/" className="flex items-center gap-2">
-                <Anvil />
-                <span className="font-extrabold">CMS</span>
+                 <Image src="/writely.jpg" className="rounded-full" alt="Writely" width={36} height={36} />
+                <span className=" text-xl font-extrabold text-blue-500">Writely</span>
             </Link>
             {
-                auth ?
-                   (<UserModalComponent user={tempUser}/>)
+                session ?
+                    (<UserModalComponent user={session?.user} />)
                     : <Link href="/sign-in">Sign-in</Link>
             }
         </nav>
@@ -37,16 +37,19 @@ const tempUser ={
 const UserModalComponent = ({ user }) => {
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger>user</DropdownMenuTrigger>
+            <DropdownMenuTrigger>
+                <Image src={user.image} alt={user.name} width={40} height={40} className="rounded-full border-2 border-[greenyellow]" />
+            </DropdownMenuTrigger>
             <DropdownMenuContent>
-                <DropdownMenuLabel>HI {user.name}</DropdownMenuLabel>
+                <DropdownMenuLabel>Hi {user.name}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                    <Link href={`/profile/${user.username}`}>Profile</Link>
+                    <Link className="flex items-center gap-2 " href={`/profile/${user.username}`}><User className="w-4" />  Profile</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem>Billing</DropdownMenuItem>
-                <DropdownMenuItem>Team</DropdownMenuItem>
-                <DropdownMenuItem>Subscription</DropdownMenuItem>
+                <DropdownMenuItem>
+                    <SignOut />
+                </DropdownMenuItem>
+                 
             </DropdownMenuContent>
         </DropdownMenu>
     )

@@ -1,7 +1,7 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app-sideba";
+import { AppSidebar } from "@/components/app-sidebar";
 
 import { Poppins } from 'next/font/google'
 import Navbar from "@/components/navbar";

@@ -3,7 +3,7 @@ import { Icons } from "@/components/Icons";
 import { useToast } from "@/hooks/use-toast";
 import { Anvil } from "lucide-react";
 import { signIn } from "next-auth/react";
-import { use, useState } from "react";
+import {  useState } from "react";
 
 export default function SignIn() {
     const [loading, setLoading] = useState(false);

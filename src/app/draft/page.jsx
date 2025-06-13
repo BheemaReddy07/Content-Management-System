@@ -3,10 +3,18 @@ import dynamic from "next/dynamic";
 
 const Editor = dynamic(() => import("@/components/Editor"), { ssr: false });
 
-export default function Draft() {
-    const savePost = ({ title, slug, ogImage, content, excerpt, metaDescription, status, keywords }) => {
-        console.log("slug saved", { slug });
-        console.log("ogImage saved", { ogImage });
+export default async function Draft() {
+    const savePost = async ({ title, slug, ogImage, content, excerpt, metaDescription, status, keywords ,category }) => {
+
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/create`,
+            {
+                method: "POST",
+                headers: { 'content-Type': 'application/json,' },
+                body: JSON.stringify({title, slug, ogImage, content, excerpt, metaDescription, status, keywords ,category})
+            })
+            if(!res.ok){
+                throw new Error ("Post Saving Failed")
+            }
     }
     return (
         <div className="p-8">

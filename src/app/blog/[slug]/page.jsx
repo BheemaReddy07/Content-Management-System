@@ -3,8 +3,12 @@ import { Calendar } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import '@/styles/blog.css'
+import { notFound } from "next/navigation";
 const fetchSingleBlog = async (slug) =>{
     const res = await fetch (`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/get/${slug}`,{next:{tags:[slug]}})
+    if(res.status == 404){
+        notFound();
+    }
     const data = await res.json();
     return data;
 }

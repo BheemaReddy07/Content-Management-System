@@ -15,8 +15,7 @@ export async function PUT(request, { params }) {
 
     const session = await getServerSession(authOptions)
     const isAdmin = await IsAdmin(session);
-    console.log(session, "inside put verb thr session is given")
-
+   
     const post = await prisma.post.findUnique({
         where: { slug },
         select: {

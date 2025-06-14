@@ -30,12 +30,12 @@ export default  function EditPreviousDraft({params}) {
             })
         }
           const response = await res.json();
-          console.log(response,"response")
+           
           setPost(response);
 
      }
      fetchPost();
-     console.log(post,"loaded post for updation")
+     
     },[slug])
 
 

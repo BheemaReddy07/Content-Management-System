@@ -17,7 +17,7 @@ export async function GET(request, { params }) {
             }
         }
     })
-    console.log(post, "post singel got from prisma")
+    
     if (!post) {
         return NextResponse.json({ message: "Post not Found" }, { status: 404 })
     }

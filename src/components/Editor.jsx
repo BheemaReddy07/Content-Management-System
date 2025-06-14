@@ -7,14 +7,27 @@ import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
 import { slugify } from "slugmaster";
 import ImageUpload from "@/components/ImageUpload";
-export default function Editor({ onSave }) {
-    const { register, handleSubmit } = useForm();
+export default function Editor({ onSave, initialData }) {
+    const { register, handleSubmit,setValue } = useForm();
     const [content, setContent] = useState("");
-    const [ogImage,setOgImage] = useState("");
+    const [ogImage, setOgImage] = useState("");
+
+    useEffect(() => {
+        if (initialData) {
+            setValue('title', initialData.title);
+            setContent(initialData.content);
+            setOgImage(initialData.thumbnail)
+            setValue('keywords', initialData.keywords || "");
+            setValue('category', initialData.catSlug || "");
+            setValue('excerpt', initialData.excerpt || "");
+            setValue('metaDescription', initialData.desc || "");
+            setValue('status', initialData.status);
+        }
+    }, [initialData])
 
 
     const handleForm = (data) => {
-         
+
         const generatedSlug = slugify(data.title);
         onSave({ ...data, slug: generatedSlug, ogImage, content });
     };
@@ -62,7 +75,7 @@ export default function Editor({ onSave }) {
                     type="text"
                 />
                 <h2 className="text-xl font-bold"> SEO Data</h2>
-                <ImageUpload returnImage={setOgImage} />
+                <ImageUpload returnImage={setOgImage} preloadedImage={ogImage} />
                 <input
                     {...register("category")}
                     placeholder="Enter a category"

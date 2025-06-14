@@ -37,7 +37,7 @@ export default async function Navbar() {
 const UserModalComponent = ({ user }) => {
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger>
+            <DropdownMenuTrigger className="outline-none">
                 <Image src={user.image} alt={user.name} width={40} height={40} className="rounded-full border-2 border-[greenyellow]" />
             </DropdownMenuTrigger>
             <DropdownMenuContent>

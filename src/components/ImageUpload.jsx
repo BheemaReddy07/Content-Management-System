@@ -1,10 +1,11 @@
 
 import { useState } from "react";
 import axios from "axios";
+import Image from "next/image";
 
 
 
-export default function ImageUpload({ returnImage }) {
+export default function ImageUpload({ returnImage, preloadedImage }) {
 
     const [loading, setLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState(null);
@@ -31,6 +32,17 @@ export default function ImageUpload({ returnImage }) {
         }
     }
 
+    if (preloadedImage) {
+        return (
+            <div className="space-y-6">
+                <label className="text-lg font-semibold w-fit "><span className="bg-gray-500/10 w-20  border-gray-500 border-dashed border-2 p-3 rounded ">Upload Cover Image</span>
+                    <input type="file" onChange={handleImageUpload} className="hidden" />
+                </label>
+                <Image width={300} height={170} src={preloadedImage} alt="Preview" className="mt-1 max-w-sm rounded-md border border-gray-400" />
+
+            </div>
+        )
+    }
 
 
     return (

@@ -1,9 +1,8 @@
 import AuthForm from "@/components/authForm";
 
- 
-export default function SignIn() {
+export default function SignUp() {
    
     return <section className="w-full flex h-screen items-center justify-center">
-         <AuthForm />
+       <AuthForm origin="signup" />
     </section>
 }

@@ -1,12 +1,12 @@
-import { getAllBlogs } from "@/app/actions/getBlogs"
+import { getAllBlogs, getUserBlogs } from "@/app/actions/getBlogs"
 import EditableBlogCards from "@/components/admin/EditableBlogCards"
 import Pagination from "../pagination"
 import { config } from "@/static/config"
 import CategoryFilter from "../category-filter"
 
-export default async function AdminAllPosts({ page, category }) {
+export default async function UserAllPosts({ page, category ,user }) {
 
-    const { posts, count } = await getAllBlogs({ page, category })
+    const { posts, count } = await getUserBlogs({ page, category, userId:user.id })
 
 
 

@@ -1,4 +1,5 @@
 import AdminAllPosts from "@/components/admin/admin-all-posts"
+import UserAllPosts from "@/components/admin/user-all-posts";
 import { authOptions } from "@/lib/auth"
 import IsAdmin from "@/utils/isAdmin"
 import { getServerSession } from "next-auth"
@@ -9,10 +10,10 @@ export default async function AllPosts({searchParams}){
 
     const session =await getServerSession(authOptions)
 
-    const adminCheck = IsAdmin(session)
+    const adminCheck =await IsAdmin(session)
 
     if(!adminCheck){
-        return <div>Not accessible</div>
+        return <UserAllPosts page={page} category={category} user={session.user} />
     }
 
 

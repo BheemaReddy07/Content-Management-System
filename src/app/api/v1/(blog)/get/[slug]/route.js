@@ -13,13 +13,19 @@ export async function GET(request, { params }) {
                 select: {
                     name: true,
                     image: true,
+                    username: true,
                 }
             }
         }
     })
-    
+
     if (!post) {
         return NextResponse.json({ message: "Post not Found" }, { status: 404 })
     }
-    return NextResponse.json(post, { status: 200, headers: { 'content-Type': "application/json" } })
+    return NextResponse.json(post, {
+        status: 200, headers: {
+            "Content-Type": "application/json",
+            "Cache-Control": "no-store"
+        }
+    })
 }

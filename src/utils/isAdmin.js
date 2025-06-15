@@ -1,7 +1,7 @@
 const listOfAdmins = [
     'test@gmail.com',
     'admin@writely.com',
-    //  'bheemareddy2910@gmail.com'
+    'bheemareddy2910@gmail.com'
 ]
 
 export default async function IsAdmin(session) {
@@ -11,7 +11,7 @@ export default async function IsAdmin(session) {
     let emailMatch = listOfAdmins.some(singleEmail => {
         return singleEmail.toLowerCase().trim() === userEmail
     })
- 
+
     if (session.user.role == 'admin' || (session.user?.email && emailMatch)) {
         return true;
     }

@@ -15,7 +15,7 @@ export async function PUT(request, { params }) {
 
     const session = await getServerSession(authOptions)
     const isAdmin = await IsAdmin(session);
-   
+
     const post = await prisma.post.findUnique({
         where: { slug },
         select: {
@@ -49,7 +49,12 @@ export async function PUT(request, { params }) {
         })
         revalidateTag(slug);
 
-        return NextResponse.json(updatedPost, { status: 200 })
+        return NextResponse.json(updatedPost, {
+            status: 200, headers: {
+                "Content-Type": "application/json",
+                "Cache-Control": "no-store"
+            }
+        })
     } catch (error) {
         console.log(error.message);
         return NextResponse.json({ message: "Failed to update the post" }, { status: 500 })
@@ -78,5 +83,10 @@ export async function GET(request, { params }) {
 
     }
 
-    return NextResponse.json(post, { status: 200 });
+    return NextResponse.json(post, {
+        status: 200, headers: {
+            "Content-Type": "application/json",
+            "Cache-Control": "no-store"
+        }
+    });
 }

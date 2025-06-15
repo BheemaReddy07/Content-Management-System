@@ -4,7 +4,7 @@ import IsAdmin from "@/utils/isAdmin";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
-export  async function PATCH(request) {
+export async function PATCH(request) {
 
     const { id, status } = await request.json();
 
@@ -27,7 +27,12 @@ export  async function PATCH(request) {
             data: { status }
         })
 
-        return NextResponse.json(updatedPost, { status: 200 })
+        return NextResponse.json(updatedPost, {
+            status: 200, headers: {
+                "Content-Type": "application/json",
+                "Cache-Control": "no-store"
+            }
+        })
     }
 
     return NextResponse.json({ message: "Not Authorized" }, { status: 400 })

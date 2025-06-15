@@ -9,8 +9,9 @@ export default async function Draft() {
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/create`,
             {
                 method: "POST",
-                headers: { 'content-Type': 'application/json,' },
-                body: JSON.stringify({title, slug, ogImage, content, excerpt, metaDescription, status, keywords ,category})
+                headers: { 'Content-Type': 'application/json,' },
+                body: JSON.stringify({title, slug, ogImage, content, excerpt, metaDescription, status, keywords ,category}),
+                cache: "no-store"
             })
             if(!res.ok){
                 throw new Error ("Post Saving Failed")

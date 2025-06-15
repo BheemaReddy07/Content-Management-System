@@ -6,7 +6,11 @@ import '@/styles/blog.css'
 import { notFound } from "next/navigation";
 const fetchSingleBlog = async (slug) => {
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/get/${slug}`, { next: { tags: [slug] } })
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/get/${slug}`, {
+            next: { tags: [slug] },
+            cache: "no-store",
+        });
+
         if (res.status == 404) {
             notFound();
         }
@@ -20,7 +24,7 @@ const fetchSingleBlog = async (slug) => {
 
 export async function generateMetadata({ params }) {
     const res = await fetchSingleBlog(params.slug);
-
+    if (!res) return { title: "Post not found" };
     return {
         title: res.title,
         description: res.excerpt,
@@ -34,12 +38,14 @@ export async function generateMetadata({ params }) {
 export default async function SingleBlog({ params }) {
     const { slug } = params
     const post = await fetchSingleBlog(slug)
+    if (!post) notFound();
 
     const tempTags = "SpaceX, NASA, Mars, Exploration, Technology";
 
 
     return (
         <section>
+
             <div className="flex flex-col gap-4 items-center">
                 {post.thumbnail && <Image className="rounded border w-[90%] md:w-[700px]" src={post.thumbnail} width={500} height={250} alt={post.title} />}
                 <h1 className="text-2xl md:text-4xl font-bold">{post.title}</h1>
@@ -49,7 +55,7 @@ export default async function SingleBlog({ params }) {
                             <Calendar className="text-gray-400 size-4" />
                             <p className="text-gray-400 text-xs">Created on: {FormatDate(post.createdAt)}</p>
                         </div>
-                        <Link className="flex items-center gap-2" href={`/user/${post.authorId}`}>
+                        <Link className="flex items-center gap-2" href={`/user/${post.author.username}`}>
                             <Image className="rounded-full" src={post.author.image} width={20} height={20} />
                             <p className="text-xs text-gray-400">{post.author.name}</p>
                         </Link>

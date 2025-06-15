@@ -11,38 +11,45 @@ export default function EditableBlogCards({ post }) {
     const Router = useRouter();
 
     const handleDelete = async (id) => {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/delete/${post.id}`,{
-            method:"DELETE",
-             headers:{"Content-Type":"application/json"},
-        })
-        if(res.ok){
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/delete/${post.id}`, 
+            {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                cache: "no-store"
+            })
+        if (res.ok) {
             setCurrentStatus("DELETE");
             Router.refresh();
         }
-         
+
     }
 
     const handleCovertToDraft = async (id) => {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/state`, {
-            method: "PATCH",
-            headers:{"Content-Type":"application/json"},
-            body:JSON.stringify({id,status:"DRAFT"})
-        })
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/state`,
+            
+             {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id, status: "DRAFT" }),
+                cache: "no-store"
+            })
 
-        if(res.ok){
+        if (res.ok) {
             setCurrentStatus("DRAFT")
             Router.refresh()
         }
     }
 
     const publishABlog = async (id) => {
-           const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/state`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/state` , {
             method: "PATCH",
-            headers:{"Content-Type":"application/json"},
-            body:JSON.stringify({id,status:"PUBLISHED"})
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id, status: "PUBLISHED" }),
+            cache: "no-store"
+
         })
 
-        if(res.ok){
+        if (res.ok) {
             setCurrentStatus("PUBLISHED")
             Router.refresh()
         }
@@ -51,7 +58,7 @@ export default function EditableBlogCards({ post }) {
     return (
         <div className="flex">
             <div className="bg-gray-600/30 p-3 rounded-lg  w-full flex gap-3 flex-col sm:flex-row md:flex-row justify-between">
-                <div> <h2 className="font-bold text-lg"> {post.title.substring(0,25)}...</h2>
+                <div> <h2 className="font-bold text-lg"> {post.title.substring(0, 25)}...</h2>
                     <p className="text-sm  text-gray-300"> {post.excerpt.substring(0, 15)}...</p>
                     <span className="text-xs text-gray-400 ">{FormatDate(post.createdAt)}</span>
                 </div>

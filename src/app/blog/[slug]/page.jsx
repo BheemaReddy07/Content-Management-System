@@ -29,7 +29,7 @@ export async function generateMetadata({ params }) {
         title: res.title,
         description: res.excerpt,
         openGraph: {
-            images: [res.thumbnail]
+            images: [`${process.env.NEXT_PUBLIC_BASE_URL}/api/og?title=${res.title}`]
         }
     }
 }
@@ -56,7 +56,7 @@ export default async function SingleBlog({ params }) {
                             <p className="text-gray-400 text-xs">Created on: {FormatDate(post.createdAt)}</p>
                         </div>
                         <Link className="flex items-center gap-2" href={`/user/${post.author.username}`}>
-                            <Image className="rounded-full" src={post.author.image} width={20} height={20} />
+                            <Image className="rounded-full" src={post.author.image} alt={post.author.username} width={20} height={20} />
                             <p className="text-xs text-gray-400">{post.author.name}</p>
                         </Link>
                     </div>

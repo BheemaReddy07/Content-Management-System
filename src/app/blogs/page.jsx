@@ -1,20 +1,34 @@
+"use client"
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
  
+export const dynamic = "force-dynamic";
+
+// const fetchAllBlogs = async () => {
+//   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/get`,{ cache: "no-store"});
+//   const data = await res.json();
+//   return data;
+// }
+export default  function Blogs() {
+  const [blogInfo ,setBlogInfo] = useState([]);
 
 
-const fetchAllBlogs = async () => {
-  
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/get`,{ cache: "no-store"});
-  
-  const data = await res.json();
-  return data;
-}
-export default async function Blogs() {
-  const blogData = await fetchAllBlogs()
+  useEffect(()=>{
+    const blogData = async () =>{
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/get`,{ cache: "no-store"});
+      const information = await res.json()
+      setBlogInfo(information)
+    }
+    blogData();
+    const interval = setInterval(blogData,5000)
+    return () =>clearInterval(interval)
+
+  },[])
+   
   return (
     <section className="grid grid-cols-2 md:grid-cols-3 gap-4 p-8">
-      {blogData.map((blog, index) => (
+      {blogInfo.map((blog, index) => (
         <BlogCard key={index} title={blog.title} excerpt={blog.excerpt} image={blog.thumbnail} url={blog.slug} />
       ))}
     </section>

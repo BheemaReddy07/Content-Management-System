@@ -18,6 +18,9 @@ const poppins = Poppins({
 export const metadata = {
   title: "Writely",
   description: "A blogging platform for developers",
+  icons: {
+    icon: "/writely.jpg",  
+  },
 };
 
 export default function RootLayout({ children }) {

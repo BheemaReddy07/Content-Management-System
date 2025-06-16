@@ -2,16 +2,18 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { useEffect,  useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "react-quill/dist/quill.snow.css";
-import ReactQuill from "react-quill";
+// import ReactQuill from "react-quill";
 import { slugify } from "slugmaster";
 import ImageUpload from "@/components/ImageUpload";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { z } from "zod"
+import { startTransition } from "react";
+import dynamic from "next/dynamic";
 
-
+ const ReactQuill = dynamic(()=>import("react-quill"),{ssr:false ,})
 const schema = z.object({
     title: z.string().min(10, { message: 'Title must contain 10 or more characters' }).min(1, { message: "Title must not be empty" }),
     excerpt: z.string().min(10, { message: "Please add some details in the excerpt" }),
@@ -45,18 +47,24 @@ export default function Editor({ onSave, initialData }) {
     }, [initialData])
 
 
-    const handleForm = (data) => {
+    const handleForm = async (data) => {
 
         try {
             const generatedSlug = initialData ? initialData.slug : slugify(data.title);
-            onSave({ ...data, slug: generatedSlug, ogImage, content });
+            await onSave({ ...data, slug: generatedSlug, ogImage, content });
             {
                 toast({
                     title: "Success",
                     description: initialData ? "Your Blog was Updated" : "Your Blog was Posted",
                 })
             }
-            if (data.status === "PUBLISHED") router.push(`/blog/${generatedSlug}`)
+
+            if (data.status === "PUBLISHED") {
+                startTransition(() => {
+                    router.push(`/blog/${generatedSlug}`)
+                })
+
+            }
 
         } catch (error) {
             console.log(error.message);

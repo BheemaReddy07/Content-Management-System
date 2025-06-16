@@ -64,6 +64,7 @@ export default function EditableBlogCards({ post }) {
                 </div>
                 <div className="space-x-2 flex items-center  gap-3   ">
                     {currentStatus === "PUBLISHED" ? <Button onClick={() => handleCovertToDraft(post.id)} variant="outline">Convert to Draft</Button> : <Button onClick={() => publishABlog(post.id)} variant="outline">Publish</Button>}
+                    <Button className="bg-gray-600"  onClick={() =>Router.push(`draft/${post.slug}`)} variant="ghost">Edit</Button> 
                     {currentStatus === "PUBLISHED" && <Button onClick={() => Router.push(`/blog/${post.slug}`)}>View</Button>}
                     <Trash2Icon onClick={() => handleDelete(post.id)} className="size-5 text-gray-400 hover:cursor-pointer" />
                 </div>

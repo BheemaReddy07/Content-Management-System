@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server"
 
 const allowedOrigins = [
- "http://localhost:3000",
-  "https://your-frontend-domain.com",   
+  "http://localhost:3000",
+  "https://writely-blush.vercel.app/",
 ]
 
 export function middleware(request) {

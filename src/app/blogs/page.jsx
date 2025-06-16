@@ -1,4 +1,5 @@
 "use client"
+import ShareButton from "@/components/shareButton";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -43,7 +44,9 @@ const BlogCard = ({ title, excerpt, image, url }) => {
     {image && <Image className="w-full rounded-md" src={image} alt={title} width={300} height={170} />}
     <h2 className="text-xl font-bold text-gray-200 " >{title}</h2>
     <p className="text-sm text-gray-400">{excerpt.substring(0,200)}</p>
-    <Link className="bg-zinc-600/70 py-2 px-3 rounded w-fit text-xs bottom-1 " href={`blog/${url}`}>Read More</Link>
-
+   <div className="flex justify-between items-center">
+     <Link className="bg-zinc-600/70 py-2 px-3 rounded w-fit text-xs bottom-1 " href={`blog/${url}`}>Read More</Link>
+      <ShareButton slug={url} title={title} />
+   </div>
   </div>
 }

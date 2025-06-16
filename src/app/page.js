@@ -1,11 +1,15 @@
 import { Icons } from "@/components/Icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { authOptions, getAuthSession } from "@/lib/auth";
 import { Layers, Pencil, Zap } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Home() {
+export default async function Home() {
+
+  const session = await getAuthSession(authOptions)
+
   return (
     <main className="w-full ">
       <section className="flex justify-center h-[50vh] sm:h-[70vh] w-full   ">
@@ -19,10 +23,10 @@ export default function Home() {
             </p>
           </div>
           <div className="flex gap-3">
-            <Link href="/sign-in" className="bg-gray-200 hover:bg-gray-300 transition-all duration-200 delay-100 text-black px-4 py-1 rounded" >
+            <Link href={session ? "/blogs" : "/sign-in"} className="bg-gray-200 hover:bg-gray-300 transition-all duration-200 delay-100 text-black px-4 py-1 rounded" >
               Try it out!
             </Link>
-            <Button variant="outline">Try it out!</Button>
+            {/* <Button variant="outline">Try it out!</Button> */}
           </div>
         </div>
       </section>
@@ -47,7 +51,7 @@ export default function Home() {
 
         </div>
       </section>
-      <section className="h-[60vh] min-h-[50vh] w-full flex flex-col justify-center items-start gap-2">
+      {/* <section className="h-[60vh] min-h-[50vh] w-full flex flex-col justify-center items-start gap-2">
         <div className="max-w-[50%] mx-auto">
           <h4 className="font-bold text-2xl">Ready to transform Your Content Journey?</h4>
           <p className="text-sm text-gray-400 mt-2">Join Thousands of content creators like you who  chose CMS</p>
@@ -59,7 +63,7 @@ export default function Home() {
           </div>
 
         </div>
-      </section>
+      </section> */}
     </main>
   );
 }

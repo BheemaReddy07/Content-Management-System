@@ -10,8 +10,10 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { authOptions, getAuthSession } from "@/lib/auth"
+import IsAdmin from "@/utils/isAdmin"
 
-// Menu items.
+
 const items = [
   {
     title: "Home",
@@ -50,7 +52,20 @@ const adminItems = [
    
 ]
 
-export function  AppSidebar() {
+const userItems = [
+  {
+    title: "My Posts",
+    url: "/posts",
+    icon: NotebookPen,
+  },
+  
+   
+]
+
+export async function  AppSidebar() {
+  const session = await getAuthSession(authOptions)
+  const isAdmin =await IsAdmin(session)
+  const settingItems = isAdmin ? adminItems : userItems
   return (
     <Sidebar>
       <SidebarContent>
@@ -72,10 +87,12 @@ export function  AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
         <SidebarGroup>
-          <SidebarGroupLabel>Admin</SidebarGroupLabel>
+         {
+          isAdmin ?  <SidebarGroupLabel>Admin</SidebarGroupLabel> : ""
+         }
           <SidebarGroupContent>
             <SidebarMenu>
-              {adminItems.map((item) => (
+              {settingItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <a href={item.url}>

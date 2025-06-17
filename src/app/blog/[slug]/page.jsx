@@ -48,7 +48,7 @@ export default async function SingleBlog({ params }) {
 
             <div className="flex flex-col gap-4 items-center">
                 {post.thumbnail && <Image className="rounded border w-[90%] md:w-[700px]" src={post.thumbnail} width={500} height={250} alt={post.title} />}
-                <h1 className="text-2xl md:text-4xl font-bold">{post.title}</h1>
+                <h1 className="text-2xl md:text-4xl font-bold px-4">{post.title}</h1>
                 <div className="meta-of-a-blog space-y-2">
                     <div className="flex flex-col sm:flex-row gap-3">
                         <div className="flex gap-2 items-center">

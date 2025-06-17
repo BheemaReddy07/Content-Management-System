@@ -18,8 +18,8 @@ export default async function AdminAllUsers() {
             return <Link href={`/user/${user.username}`} className="flex gap-3 p-3 bg-gray-500/10">
                 <Image className="size-20" src={user.image} width={50} height={50} alt={user.userName} />
                 <div className="space-y-1">
-                    <h2 className="font-bold">{user.name}</h2>
-                    <p className="text-gray-300">{user.email}</p>
+                    <h2 className="font-bold">{user.name.substring(0,20)}</h2>
+                    <p className="hidden sm:block text-gray-300">{user.email}</p>
                     <p className="text-xs text-gray-300">{user.username}</p>
                 </div>
             </Link>

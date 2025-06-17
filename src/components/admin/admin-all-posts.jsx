@@ -19,7 +19,7 @@ export default async function AdminAllPosts({ page, category }) {
                     return <EditableBlogCards key={post.id} post={post} />
                 })
             }
-              <Pagination className="fixed bottom-10 left-1/2 -translate-x-1/2" currentPage={page} totalItems={count} perPage={config.perPage} />
+              <Pagination className="mt-8 sm:fixed sm:bottom-10 sm:left-1/2 sm:-translate-x-1/2" currentPage={page} totalItems={count} perPage={config.perPage} />
         </section>
     )
 }

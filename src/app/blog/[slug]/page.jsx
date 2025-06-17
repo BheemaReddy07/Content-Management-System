@@ -66,7 +66,7 @@ export default async function SingleBlog({ params }) {
                     </div>
                     {post?.keywords && <div className="text-xs flex items-center gap-2">
                         <p>Tags:</p>
-                        {post?.keywords.split(",").map((tag, index) => <p key={`${tag}_${index}`} className="badge bg-gray-600/30 border border-gray-700 w-fit px-[4px] py-[2px] rounded">{tag}</p>)}
+                        {post?.keywords.substring(0,35).split(",").map((tag, index) => <p key={`${tag}_${index}`} className="badge bg-gray-600/30 border border-gray-700 w-fit px-[4px] py-[2px] rounded">{tag}</p>)}
                     </div>}
                 </div>
                 <div className="blogContent text-sm w-[90%] md:w-2/3 text-gray-300" dangerouslySetInnerHTML={{ __html: post.content }}>

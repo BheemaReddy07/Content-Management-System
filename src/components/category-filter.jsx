@@ -18,7 +18,7 @@ export default function CategoryFilter() {
     }
     return (
         <form onSubmit={handleSubmit} className="flex gap-3">
-            <Input placeholder="Filter by category" value={category} onChange={e=>setCategory(e.target.value)} className="w-[300px]" type="text" />
+            <Input placeholder="Filter by category" value={category} onChange={e=>setCategory(e.target.value)} className=" w-[270px] sm:w-[300px]" type="text" />
             <Button type="submit">Filter</Button>
         </form>
     )

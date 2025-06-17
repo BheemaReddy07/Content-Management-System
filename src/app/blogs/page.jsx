@@ -28,7 +28,7 @@ export default  function Blogs() {
   },[])
    
   return (
-    <section className="grid grid-cols-2 md:grid-cols-3 gap-4 p-8">
+    <section className="grid gird-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-8">
       {blogInfo.map((blog, index) => (
         <BlogCard key={index} title={blog.title} excerpt={blog.excerpt} image={blog.thumbnail} url={blog.slug} />
       ))}

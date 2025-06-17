@@ -12,7 +12,7 @@ export default async function Home() {
 
   return (
     <main className="w-full ">
-      <section className="flex justify-center h-[50vh] sm:h-[70vh] w-full   ">
+      <section className="flex justify-center  p-2 sm:p-0 h-[50vh] sm:h-[70vh] w-full   ">
         <div  className="flex flex-col gap-4 justify-center items-center  text-center">
           <div>
             <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl ">
@@ -32,7 +32,7 @@ export default async function Home() {
       </section>
 
       <section className="min-h-screen w-full  sm:min-h-[50vh] bg-gray-600/10 flex justify-center items-center px-4 ">
-        <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-3  ">
+        <div className="grid gap-4 grid-cols-1 sm:grid-cols-3 lg:grid-cols-3  ">
           <span className=" flex  flex-col items-center gap-2 transition-transform duration-200 hover:scale-105 cursor-pointer ">
             <Icons.BlogCustomIcon className="w-16 h-16" />
             <h3 className="text-xl font-bold text-gray-100">Intutive Editor</h3>

@@ -44,7 +44,7 @@ const UserModalComponent = ({ user }) => {
                 <DropdownMenuLabel>Hi {user.name}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                    <Link className="flex items-center gap-2 " href={`/profile/${user.username}`}><User className="w-4" />  Profile</Link>
+                    <Link className="flex items-center gap-2 " href={`/user/${user.username}`}><User className="w-4" />  Profile</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                     <SignOut />

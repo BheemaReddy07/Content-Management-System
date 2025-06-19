@@ -19,8 +19,10 @@ export async function PATCH(request) {
     const grabPost = await prisma.post.findUnique({
         where: { id },
     })
-
-    const isAuthor = grabPost === session.user.id
+    if (!grabPost) {
+        return NextResponse.json({ message: "Post not found" }, { status: 404 })
+    }
+    const isAuthor = grabPost.authorId === session?.user?.id
     if (isAuthor || adminCheck) {
         const updatedPost = await prisma.post.update({
             where: { id },

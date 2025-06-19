@@ -18,10 +18,10 @@ export default function Blogs() {
   useEffect(() => {
     const blogData = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/get`, { cache: "no-store" });
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/get`, { cache: "no-store", next: { revalidate: 0 } });
         const information = await res.json();
         setBlogInfo(information);
-        
+
       } catch (error) {
         console.error("Failed to fetch blogs:", error);
       }

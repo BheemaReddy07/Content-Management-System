@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 📝 Writely — Content Management System
 
-## Getting Started
+**Writely** is a modern, full-featured **Content Management System** built with **Next.js**, designed for both **users** and **admins**.  
+It enables seamless blog creation, management, and sharing, with integrated authentication and media handling.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ✨ Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 👤 User
+- 🔐 **Google OAuth** authentication with **JWT** session management
+- 📝 Create, update, and delete blogs
+- 📖 Read blogs created by all users
+- 📜 Detailed blog pages with descriptions
+- 🔗 Share blogs with **Open Graph (OG) images** for social platforms
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### 🛡️ Admin
+- 👀 All **User** features
+- 📋 View all registered users
+- 👤 Access user profile details from Google account
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+---
 
-## Learn More
+## 🛠 Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+- **Framework:** [Next.js](https://nextjs.org/)  
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)  
+- **Database & ORM:** [Prisma](https://www.prisma.io/)  
+- **Media Storage:** [Cloudinary](https://cloudinary.com/)  
+- **Authentication:** Google OAuth + JWT  
+- **Deployment:** Vercel  
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## 📬 Contact
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- **Name:** Bheema Reddy  
+- - **Name:** Bheema Subramanyeswar Reddy Tatiparthi  
+- **Email:** bheemareddy2910@gmail.com  
+- **Portfolio:** https://bheemareddy-portfolio.vercel.app  
+- **LinkedIn:** https://www.linkedin.com/in/bheema-subramanyeswar-reddy-tatiparthi-541104344?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app  
+- **GitHub:** https://github.com/BheemaReddy07  
+---
